@@ -57,36 +57,59 @@ if executor:lower():find("delta") then
 	camera.CameraType = Enum.CameraType.Scriptable
 	camera.CFrame = CFrame.new(rootPart.Position + Vector3.new(0, 6, 12), rootPart.Position)
 
-	-- 🖥️ Minimalist prompt UI
-	local screenGui = Instance.new("ScreenGui")
-	screenGui.Name = "DeltaWarningPrompt"
-	screenGui.ResetOnSpawn = false
-	screenGui.IgnoreGuiInset = true
-	screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
-	screenGui.Parent = gui
+	-- Create UI
+local screenGui = Instance.new("ScreenGui")
+screenGui.IgnoreGuiInset = true
+screenGui.ResetOnSpawn = false
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+screenGui.Parent = player:WaitForChild("PlayerGui")
 
-	local frame = Instance.new("Frame")
-	frame.Size = UDim2.new(0, 460, 0, 180)
-	frame.Position = UDim2.new(0.5, 0, 0.5, 0)
-	frame.AnchorPoint = Vector2.new(0.5, 0.5)
-	frame.BackgroundColor3 = Color3.fromRGB(245, 245, 245)
-	frame.BorderSizePixel = 0
-	frame.Parent = screenGui
+local mainFrame = Instance.new("Frame")
+    mainFrame.Size = UDim2.new(0, 400, 0, 200)
+    mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+    mainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+    mainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    mainFrame.BorderSizePixel = 0
+    mainFrame.Parent = screenGui
 
-	local corner = Instance.new("UICorner")
-	corner.CornerRadius = UDim.new(0, 14)
-	corner.Parent = frame
+local uiCorner = Instance.new("UICorner", mainFrame)
+uiCorner.CornerRadius = UDim.new(0, 10)
 
-	local label = Instance.new("TextLabel")
-	label.Size = UDim2.new(1, -40, 1, -40)
-	label.Position = UDim2.new(0, 20, 0, 20)
-	label.BackgroundTransparency = 1
-	label.TextWrapped = true
-	label.TextScaled = true
-	label.Font = Enum.Font.Gotham
-	label.TextColor3 = Color3.fromRGB(30, 30, 30)
-	label.Text = "⚠️ This script is not stable on Delta.\n\nPlease use KRNL to run it properly."
-	label.Parent = frame
+local title = Instance.new("TextLabel")
+title.Text = "This script is not stable on Delta.\nPlease use Krnl if you wish to use the script."
+title.Font = Enum.Font.Gotham
+title.TextSize = 18
+title.TextColor3 = Color3.fromRGB(30, 30, 30)
+title.BackgroundTransparency = 1
+title.Size = UDim2.new(1, -40, 0, 100)
+title.Position = UDim2.new(0, 20, 0, 20)
+title.TextWrapped = true
+title.TextXAlignment = Enum.TextXAlignment.Center
+title.TextYAlignment = Enum.TextYAlignment.Center
+title.Parent = mainFrame
+
+-- Copy Button
+local copyButton = Instance.new("TextButton")
+copyButton.Size = UDim2.new(0, 200, 0, 36)
+copyButton.Position = UDim2.new(0.5, -100, 1, -50)
+copyButton.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
+copyButton.Text = "Copy Krnl Link"
+copyButton.Font = Enum.Font.Gotham
+copyButton.TextSize = 16
+copyButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+copyButton.AutoButtonColor = true
+copyButton.Parent = mainFrame
+
+local buttonCorner = Instance.new("UICorner", copyButton)
+buttonCorner.CornerRadius = UDim.new(0, 6)
+
+copyButton.MouseButton1Click:Connect(function()
+    setclipboard("https://wearedevs.net/d/Krnl")
+    copyButton.Text = "Copied!"
+    task.wait(1)
+    copyButton.Text = "Copy Krnl Link"
+end)
+
 
 	-- 🔧 Hide TopBar (ESC/menu)
 	pcall(function()
